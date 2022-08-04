@@ -4,12 +4,7 @@ import { Switch, useTheme } from "@nextui-org/react";
 
 export default function ThemeSwitch() {
     const { setTheme } = useNextTheme();
-	const { isDark, type } = useTheme();
-
-    //set theme as body class for tailwindcss
-    useEffect(() => {
-		document.body.className = type;
-	}, [type]);
+	const { isDark } = useTheme();
 
 	return (
 		<Switch
