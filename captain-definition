@@ -6,7 +6,6 @@
                         "WORKDIR /usr/src/app",
                         "COPY ./package.json /usr/src/app/",
                         "RUN npm install && npm cache clean --force",
-                        "ENV DATABASE_URL 'mongodb://cit116:cit116MONGODBcaptain@mongodb.cit116.net:27017/qr?authSource=admin'",
                         "RUN npx prisma generate",
                         "COPY ./ /usr/src/app",
                         "ENV NODE_ENV production",
