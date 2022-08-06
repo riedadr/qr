@@ -6,12 +6,12 @@
                         "WORKDIR /usr/src/app",
                         "COPY ./package.json /usr/src/app/",
                         "RUN npm install && npm cache clean --force",
+                        "ENV DATABASE_URL 'mongodb://cit116:cit116MONGODBcaptain@mongodb.cit116.net:27017/qr?authSource=admin'",
+                        "RUN npx prisma generate",
                         "COPY ./ /usr/src/app",
                         "ENV NODE_ENV production",
                         "ENV PORT 80",
-                        "ENV DATABASE_URL 'mongodb://cit116:cit116MONGODBcaptain@mongodb.cit116.net:27017/qr?authSource=admin'",
                         "EXPOSE 80",
-                        "RUN npx prisma generate",
                         "RUN npm run build",
                         "CMD [ \"npm\", \"start\" ]"
                     ]
