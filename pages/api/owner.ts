@@ -17,8 +17,8 @@ export default async function handler(
 			id: id?.toString(),
 		},
 		select: {
-			vorname: auswahl.includes("vorname"),
-			nachname: auswahl.includes("nachname"),
+			firstname: auswahl.includes("firstname"),
+			lastname: auswahl.includes("lastname"),
 			//role: auswahl.includes("role"),
 			//username: auswahl.includes("username"),
 			//password: auswahl.includes("password"),

@@ -12,8 +12,8 @@ datasource db {
 
 model owner {
   id       String @id @default(auto()) @map("_id") @db.ObjectId
-  vorname  String
-  nachname String
+  firstname  String
+  lastname String
   role     String
   username String
   password String
