@@ -1,5 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Codystar&display=swap');
 
+@font-face {
+    font-family: 'Subway';
+    src: url('/assets/fonts/SUBWT___.ttf') format('truetype'),
+        url('/assets/fonts/SUBWT___.woff') format('woff'),
+        url('/assets/fonts/SUBWT___.otf') format('opentype');
+}
 
 .shell header {
     height: var(--nav-height);
@@ -12,7 +18,7 @@
     color: var(--gradient);
 
     h1 {
-        font-family: 'Codystar', cursive;
+        font-family: 'Subway Ticker', serif;
         padding-top: 0.5rem;
     }
 }
