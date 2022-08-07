@@ -5,23 +5,16 @@ export default async function handler(
 	req: NextApiRequest,
 	res: NextApiResponse
 ) {
+	const ObjectId = require("mongodb").ObjectID;
 	const query = req.query;
 	const { link, id } = query;
 	const { db } = await connectToDatabase();
 
 	let thing;
 	if (link) {
-		thing = await db
-			.collection("thing")
-			.find({ link: link })
-			.limit(20)
-			.toArray();
+		thing = await db.collection("thing").findOne({ link: link });
 	} else {
-		thing = await db
-			.collection("thing")
-			.find({ id: id })
-			.limit(20)
-			.toArray();
+		thing = await db.collection("thing").findOne({ _id: ObjectId(id) });
 	}
 
 	res.json(thing);

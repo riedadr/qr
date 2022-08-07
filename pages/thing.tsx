@@ -10,6 +10,7 @@ import {
 } from "@tabler/icons";
 import { useRouter } from "next/router";
 import { owner } from "@prisma/client";
+import Shell from "../components/Shell";
 
 export default function Thing() {
 	const [thing, setThing] = useState(null);
@@ -18,26 +19,28 @@ export default function Thing() {
 
 	useEffect(() => {
 		if (link) {
-			fetch(`/api/thing?link=${link}`)
+			fetch(`/api/thing2?link=${link}`)
 				.then((res) => res.json())
 				.then((data) => {
-					setThing(data.entry);
+					setThing(data);
 				});
 		} else if (id) {
-			fetch(`/api/thing?id=${id}`)
+			fetch(`/api/thing2?id=${id}`)
 				.then((res) => res.json())
 				.then((data) => {
-					setThing(data.entry);
+					setThing(data);
 				});
 		}
 	}, [id, link]);
 
 	return (
 		<>
-			<h1>Thing</h1>
-			<div className="flex justify-center items-center">
-				<Info data={thing} />
-			</div>
+			<Shell>
+				<h1>Thing</h1>
+				<div className="flex justify-center items-center">
+					<Info data={thing} />
+				</div>
+			</Shell>
 		</>
 	);
 }
@@ -116,21 +119,23 @@ function Contact(props: any) {
 	const [contact, setContact] = useState<owner | any>();
 
 	useEffect(() => {
-		fetch(`/api/owner?id=${props.owner}&get=${props.visible}`)
+		fetch(`/api/owner2?id=${props.owner}&get=${props.visible}`)
 			.then((res) => res.json())
 			.then((data) => {
-				setContact(data.entry);
+				setContact(data);
 			});
 	}, [props.owner, props.visible]);
 
 	let elements = new Array<ReactElement>();
 	for (const key in contact) {
 		const value = contact[key];
-		elements.push(
-			<li key={key}>
-				{key}: <code>{value}</code>
-			</li>
-		);
+		if (key !== "_id") {
+			elements.push(
+				<li key={key}>
+					{key}: <code>{value}</code>
+				</li>
+			);
+		}
 	}
 
 	if (contact) return <ul>{elements}</ul>;

@@ -1,4 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+import { Collection } from "mongodb";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { connectToDatabase } from "../../lib/mongodb";
 
@@ -6,14 +7,14 @@ export default async function handler(
 	req: NextApiRequest,
 	res: NextApiResponse
 ) {
-    const ObjectId = require('mongodb').ObjectID;
-    
+	const ObjectId = require("mongodb").ObjectID;
+
 	const query = req.query;
 	const { id, get } = query;
-    const { db } = await connectToDatabase();
+	const { db } = await connectToDatabase();
 	let auswahl = get ? get.toString().split(",") : [];
 
-    /*
+	/*
 	let entry;
 
 	entry = await prisma.owner.findFirst({
@@ -33,16 +34,35 @@ export default async function handler(
 	});
     */
 
-    console.log(id);
-    
-    const owner = await db
-    .collection("owner")
-    .find({_id: ObjectId("62eb79e6bde5c0654de27944")})
-    .limit(20)
-    .toArray();
+	console.log(id);
+	/*
+	const owner = await db
+		.collection("owner")
+		.find(
+			{ _id: ObjectId(id) },
+			{
+				firstname: 1,
+				role: 0,
+			}
+		)
+		.limit(20)
+		.toArray();
+	*/
 
-    console.log(owner);
-    
+	const owner: Collection = db.collection("owner");
 
-	res.status(200).json(owner);
+	let select = {};
+	auswahl.forEach((item) => {
+		console.log(item);
+		select[item] = 1;
+	});
+
+	console.log(select);
+
+	const entry = await owner
+		.findOne({ _id: ObjectId(id) }, {projection: select})
+
+	console.log(entry);
+
+	res.status(200).json(entry);
 }
