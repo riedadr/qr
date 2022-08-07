@@ -119,7 +119,7 @@ function Contact(props: any) {
 	const [contact, setContact] = useState<owner | any>();
 
 	useEffect(() => {
-		fetch(`/api/owner2?id=${props.owner}&get=${props.visible}`)
+		fetch(`/api/owner3?id=${props.owner}&get=${props.visible}`)
 			.then((res) => res.json())
 			.then((data) => {
 				setContact(data);
