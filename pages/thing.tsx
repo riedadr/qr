@@ -9,7 +9,6 @@ import {
 	IconDeviceTablet,
 } from "@tabler/icons";
 import { useRouter } from "next/router";
-import { owner } from "@prisma/client";
 import Shell from "../components/Shell";
 
 export default function Thing() {
@@ -116,7 +115,7 @@ function Icon(props: any) {
 }
 
 function Contact(props: any) {
-	const [contact, setContact] = useState<owner | any>();
+	const [contact, setContact] = useState<any>();
 
 	useEffect(() => {
 		fetch(`/api/owner3?id=${props.owner}&get=${props.visible}`)
