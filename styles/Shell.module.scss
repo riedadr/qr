@@ -1,11 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Codystar&display=swap');
-
-@font-face {
-    font-family: 'Subway';
-    src: url('/assets/fonts/SUBWT___.ttf') format('truetype'),
-        url('/assets/fonts/SUBWT___.woff') format('woff'),
-        url('/assets/fonts/SUBWT___.otf') format('opentype');
-}
+@import url('https://fonts.googleapis.com/css2?family=Electrolize&display=swap');
 
 .shell header {
     height: var(--nav-height);
@@ -18,11 +11,14 @@
     color: var(--gradient);
 
     h1 {
-        font-family: 'Subway Ticker', serif;
+        font-family: 'Electrolize', sans-serif;
         padding-top: 0.5rem;
     }
 }
 
 .shell main {
-    padding: 1rem;
+    padding: 0.5rem;
+    height: calc(100vh - 2 * var(--nav-height));
+    max-height: calc(100vh - 1 * var(--nav-height));
+    overflow-y: auto;
 }

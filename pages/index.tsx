@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import ThemeSwitch from "../components/ThemeSwitch";
 import Shell from "../components/Shell";
+import SearchThing from "../components/SearchThing";
 
 const Home: NextPage = () => {
 	return (
@@ -16,15 +17,12 @@ const Home: NextPage = () => {
 			</Head>
 
 			<Shell>
-				<h1>
-					Welcome to <a href="https://nextjs.org">Next.js!</a>
-				</h1>
-
-				<p>
-					installed Extensions:{" "}
-					<span className="text-draculaGreen">Tailwind</span>,{" "}
-					<span className="text-draculaPurple">NextUI</span>
-				</p>
+				<main className="w-full flex flex-col items-center justify-center">
+					<h1>
+						Search for a thing
+					</h1>
+					<SearchThing />
+				</main>
 			</Shell>
 		</>
 	);
