@@ -18,6 +18,11 @@ export function UserProvider({ children }) {
 		setCurrentUser(user);
 	}
 
+	function logOut() {
+		localStorage.removeItem("user");
+		setCurrentUser(null);
+	}
+
 	useEffect(() => {
 		//set theme as body class for tailwindcss
 		document.body.className = type;
@@ -27,6 +32,7 @@ export function UserProvider({ children }) {
 
 	const value = {
 		currentUser,
+		logOut,
 		setUser,
 	};
 

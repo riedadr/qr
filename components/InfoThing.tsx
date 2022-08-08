@@ -150,7 +150,7 @@ function Content(props: any) {
 }
 
 function Data(props: any) {
-	const d = props.data;	
+	const d = props.data;
 
 	let elements = new Array<ReactElement>();
 	for (const key in d) {
@@ -159,7 +159,7 @@ function Data(props: any) {
 			elements.push(
 				<Table.Row key={key}>
 					<Table.Cell>{key}</Table.Cell>
-					<Table.Cell>{value}</Table.Cell>
+					<Table.Cell><code>{value}</code></Table.Cell>
 				</Table.Row>
 			);
 		}
@@ -181,19 +181,6 @@ function Data(props: any) {
 function Contact(props: any) {
 	const c = props.contact;
 
-	let elements = new Array<ReactElement>();
-	for (const key in c) {
-		const value = c[key];
-		if (key !== "_id") {
-			elements.push(
-				<Table.Row key={key}>
-					<Table.Cell>{key}</Table.Cell>
-					<Table.Cell>{value}</Table.Cell>
-				</Table.Row>
-			);
-		}
-	}
-
 	if (c)
 		return (
 			<Table compact shadow={false} aria-label="contact details">
@@ -205,22 +192,30 @@ function Contact(props: any) {
 					<Table.Row>
 						<Table.Cell>Name</Table.Cell>
 						<Table.Cell>
-							{c.firstname && c.lastname
-								? c.firstname + " " + c.lastname
-								: "-"}
+							<code>
+								{c.firstname && c.lastname
+									? c.firstname + " " + c.lastname
+									: "-"}
+							</code>
 						</Table.Cell>
 					</Table.Row>
 					<Table.Row>
 						<Table.Cell>E-Mail</Table.Cell>
-						<Table.Cell>{c.email ? c.email : "-"}</Table.Cell>
+						<Table.Cell>
+							<code>{c.email ? c.email : "-"}</code>
+						</Table.Cell>
 					</Table.Row>
 					<Table.Row>
 						<Table.Cell>Mobile</Table.Cell>
-						<Table.Cell>{c.mobile ? c.mobile : "-"}</Table.Cell>
+						<Table.Cell>
+							<code>{c.mobile ? c.mobile : "-"}</code>
+						</Table.Cell>
 					</Table.Row>
 					<Table.Row>
 						<Table.Cell>Phone</Table.Cell>
-						<Table.Cell>{c.phone ? c.phone : "-"}</Table.Cell>
+						<Table.Cell>
+							<code>{c.phone ? c.phone : "-"}</code>
+						</Table.Cell>
 					</Table.Row>
 				</Table.Body>
 			</Table>
