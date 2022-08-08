@@ -3,6 +3,7 @@ import Head from "next/head";
 import ThemeSwitch from "../components/ThemeSwitch";
 import Shell from "../components/Shell";
 import SearchThing from "../components/SearchThing";
+import styles from "../styles/Index.module.scss";
 
 const Home: NextPage = () => {
 	return (
@@ -17,11 +18,11 @@ const Home: NextPage = () => {
 			</Head>
 
 			<Shell>
-				<main className="w-full flex flex-col items-center justify-center">
-					<h1>
-						Search for a thing
-					</h1>
-					<SearchThing />
+				<main>
+					<div  className={styles.container}>
+						<h1>Search for a thing</h1>
+						<SearchThing />
+					</div>
 				</main>
 			</Shell>
 		</>

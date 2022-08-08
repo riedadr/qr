@@ -35,6 +35,8 @@ interface Thing {
 
 export default function InfoThing(props: any) {
 	const [thing, setThing] = useState<Thing>();
+	const [gotRes, setGotRes] = useState<boolean>(false);
+
 	const id = props.ident;
 	const link = props.link;
 
@@ -43,18 +45,20 @@ export default function InfoThing(props: any) {
 			fetch(`/api/thing2?link=${link}`)
 				.then((res) => res.json())
 				.then((data) => {
+					setGotRes(true);
 					setThing(data);
 				});
 		} else if (id) {
 			fetch(`/api/thing2?id=${id}`)
 				.then((res) => res.json())
 				.then((data) => {
+					setGotRes(true);
 					setThing(data);
 				});
 		}
 	}, [id, link]);
 
-	if (thing) {
+	if (gotRes && thing) {
 		return (
 			<Card css={{ p: "$6", mw: "600px" }}>
 				<Card.Header>
@@ -84,9 +88,17 @@ export default function InfoThing(props: any) {
 				<Content thing={thing} />
 			</Card>
 		);
+	} else if (gotRes && !thing) {
+		return (
+			<Card css={{ p: "$6", mw: "600px" }}>
+				<Text color="error">
+					Nothing found for &quot;{link ? link : id}&quot;
+				</Text>
+			</Card>
+		);
 	} else
 		return (
-			<Card css={{ p: "$6", mw: "400px" }}>
+			<Card css={{ p: "$6", mw: "600px" }}>
 				<Loading />
 			</Card>
 		);
@@ -121,18 +133,6 @@ function Content(props: any) {
 			});
 	}, [thing.owner, thing.visible]);
 
-	let elements = new Array<ReactElement>();
-	for (const key in thing.data) {
-		const value = thing.data[key];
-		if (key !== "_id") {
-			elements.push(
-				<li key={key}>
-					{key}: <code>{value}</code>
-				</li>
-			);
-		}
-	}
-
 	return (
 		<>
 			<Card.Body
@@ -159,7 +159,9 @@ function Data(props: any) {
 			elements.push(
 				<Table.Row key={key}>
 					<Table.Cell>{key}</Table.Cell>
-					<Table.Cell><code>{value}</code></Table.Cell>
+					<Table.Cell>
+						<code>{value}</code>
+					</Table.Cell>
 				</Table.Row>
 			);
 		}

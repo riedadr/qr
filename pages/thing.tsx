@@ -1,13 +1,4 @@
-import React, { ReactElement, useEffect, useState } from "react";
-import { Card, Grid, Text, Link, Loading, Avatar } from "@nextui-org/react";
-import {
-	IconCar,
-	IconDeviceDesktop,
-	IconDeviceLaptop,
-	IconDeviceMobile,
-	IconDevices,
-	IconDeviceTablet,
-} from "@tabler/icons";
+import React from "react";
 import { useRouter } from "next/router";
 import Shell from "../components/Shell";
 import InfoThing from "../components/InfoThing";
@@ -20,7 +11,7 @@ export default function Thing() {
 		<>
 			<Shell title={"/thing/" + (link ? link : id)}>
 				<main>
-					<h1>Thing</h1>
+					<h2>Result for &quot;{link ? link : id}&quot;:</h2>
 					<div className="flex justify-center items-center">
 						<InfoThing link={link} ident={id} />
 					</div>

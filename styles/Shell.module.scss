@@ -11,8 +11,13 @@
     color: var(--gradient);
 
     h1 {
+        font-size: 2rem;
         font-family: 'Electrolize', sans-serif;
         padding-top: 0.5rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
     }
 }
 

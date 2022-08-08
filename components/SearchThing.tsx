@@ -1,12 +1,14 @@
 import { Button, Card, Dropdown, Input } from "@nextui-org/react";
-import { IconHash, IconLink, IconSearch } from "@tabler/icons";
+import { IconHash, IconLink, IconSearch, IconWindowMaximize } from "@tabler/icons";
 import { useRouter } from "next/router";
 import React, { useState, useRef, FormEvent } from "react";
+import InfoThing from "./InfoThing";
 
-export default function SearchThing(props: any) {
+export default function SearchThing() {
 	const [selected, setSelected] = React.useState(new Set(["link"]));
 	const query = useRef<HTMLInputElement | null>(null);
-    const router = useRouter();
+	const router = useRouter();
+	const [started, setStarted] = useState<string>();
 
 	const selectedValue = React.useMemo(
 		() => Array.from(selected).join(", ").replaceAll("_", " "),
@@ -34,17 +36,23 @@ export default function SearchThing(props: any) {
 		search();
 	};
 
-	const search = () => {
+	
+	const newTab = () => {
 		const t = selectedValue;
 		const q = query.current?.value;
-
 		const param = `${t}=${q}`;
-        router.push("/thing?" + param)
+        if (q && q.length > 0) router.push("/thing?" + param)
     };
+	
+
+	const search = () => {
+		const q = query.current?.value;
+		if (q && q.length > 0) setStarted(q);
+	}
 
 	return (
 		<>
-			<Card css={{mw: "800px"}}>
+			<Card css={{mw: "600px"}}>
 				<Card.Body>
 					<form
 						onSubmit={submit}
@@ -81,12 +89,16 @@ export default function SearchThing(props: any) {
 							onChange={checkInput}
 						/>
 
-						<Button auto color="success" onPress={search}>
+						<Button auto type="submit" color="success" onPress={search}>
 							<IconSearch />
+						</Button>
+						<Button auto onPress={newTab}>
+							<IconWindowMaximize />
 						</Button>
 					</form>
 				</Card.Body>
 			</Card>
+			{started && <InfoThing className="mt-8" id={selectedValue === "id" ? query.current?.value : null} link={selectedValue === "link" ? query.current?.value : null} />}
 		</>
 	);
 }
