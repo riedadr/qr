@@ -8,18 +8,20 @@ export function useUser() {
 }
 
 export function UserProvider({ children }) {
-	const [currentUser, setCurrentUser] = useState(null);
+	const [currentUser, setCurrentUser] = useState({user: null, role: null});
 
 	//set theme as body class for tailwindcss
 	const { type } = useTheme();
 
-	function setUser(user) {
+	function setUser(user, role) {
 		localStorage.user = user;
-		setCurrentUser(user);
+		localStorage.role = role;
+		setCurrentUser({user: user, role: role});
 	}
 
 	function logOut() {
 		localStorage.removeItem("user");
+		localStorage.removeItem("role");
 		setCurrentUser(null);
 	}
 

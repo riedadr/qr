@@ -9,39 +9,52 @@ export default function Login() {
 	const passRef = useRef<HTMLInputElement | null>(null);
 	const [error, setError] = useState<String>();
 
-	const submit = (e: FormEvent) => {
+	const goBack = () => {
+		window.history.go(-1);
+	}
+
+	const submit = async (e: FormEvent) => {
 		e.preventDefault();
 
 		const user = userRef.current?.value;
 		const pass = passRef.current?.value;
 
-		fetch(`/api/owner3?user=${user}&get=password`)
+		const bcrypt = require("bcryptjs");
+
+		/* generate hash
+		const salt = await bcrypt.genSalt(10);
+		const hash = await bcrypt.hash(pass, salt);
+		console.log(hash);
+		*/
+
+		fetch(`/api/owner3?user=${user}&get=password,role`)
 			.then((res) => res.json())
 			.then((data) => {
-				if (data.password === pass) {
+				let auth = bcrypt.compareSync(pass, data.password)
+				if (auth) {
 					console.log("korrekt");
-					setUser(user);
+					setUser(user, data.role);
 					setError("");
-				} else setError("user or password wrong");
+				} else setError("username or password wrong");
 			})
 			.catch((err) => {
 				console.error(err);
-				setError("an error occured");
+				setError("an error occured; details in log");
 			});
 	};
 
 	return (
 		<>
-			<Shell title="login">
-				<main className="flex justify-center items-center">
+			<Shell title="/login">
+				<main className="h-full flex justify-center items-center">
 					<Card css={{ mw: "500px" }}>
-						<Card.Header>
+						<Card.Header className="flex flex-col">
 							<h2 className="mb-0">Login</h2>
+							<Text color="error">{error}</Text>
 						</Card.Header>
 						<Card.Body>
-							<Text color="error">{error}</Text>
 							<form onSubmit={submit}>
-								<div className="grid gap-4 mb-4">
+								<div className="grid gap-4 mb-12">
 									<Input
 										ref={userRef}
 										underlined
@@ -49,7 +62,7 @@ export default function Login() {
 										name="username"
 										placeholder="username"
 									/>
-									<Input
+									<Input.Password
 										ref={passRef}
 										underlined
 										label="password"
@@ -58,10 +71,10 @@ export default function Login() {
 										placeholder="password"
 									/>
 								</div>
-								<div className="flex flex-row justify-between items-center gap-2 mt-4">
-									<Link href="/" color="error">
+								<div className="flex flex-row justify-between items-center gap-2">
+									<Button flat onPress={goBack} color="error">
 										Cancel
-									</Link>
+									</Button>
 									<Button type="submit" color="success">
 										Login
 									</Button>
